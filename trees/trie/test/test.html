@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trie Test</title>
+    <style type="text/css" media="all">
+      #divAhead {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 320px;
+        overflow: auto;
+        z-index: 2;
+        border: 1px solid black;
+      }
+
+      #divAhead span {
+        float: left;
+        width: 100%;
+        margin-right: 8px;
+        border: 1px solid white;
+      }
+
+      #divAhead span:hover {
+        border-color: silver;
+      }
+
+      #log {
+        position: absolute;
+        bottom: 0;
+        width: 25%;
+        height: 100px;
+        overflow: auto;
+      }
+    </style>
+    <script src="../src/trie.js"></script>
+  </head>
+  <body>
+    <button onclick="setUp()">Load Test</button>
+    <label for="txtAhead">Search: </label>
+    <input type="text" id="txtAhead" name="txtAhead"/>
+    <div id="divAhead"></div>
+    <pre id="log"></pre>
+    <script>
+      var trie,
+          timer,
+          oAhead,
+          oBox,
+          lapse = 0,
+          log = null;
+
+      function setUp() {
+        trie = new Trie();
+        trie.add('tom');
+        trie.add('top');
+        trie.add('foo');
+        testFind();
+
+        // Set up type-ahead box
+        oAhead = document.getElementById('txtAhead');
+        oAhead.onkeyup = typeAhead;
+        oAhead.onblur = hideBox;
+        oBox = document.getElementById('divAhead');
+        oBox.style.width = (oAhead.offsetWidth) + 'px';
+      }
+
+      function typeAhead(e) {
+        e = e || event;
+
+        oBox.style.display = 'block';
+        oBox.style.top = (oAhead.offsetTop + 32) + 'px';
+        oBox.style.left = (oAhead.offsetLeft + 2) + 'px';
+
+        var t = 0,
+            word = oAhead.value,
+            root = trie.find(word);
+
+        logIt('Finding: ' + word);
+        if (!root) {
+          hideBox();
+        }
+
+        var list = root.getWords();
+        var i    = 0,
+            l    = list.length,
+            html = [];
+
+        if (!l) {
+          oBox.innerHTML = "<span>No contacts found.</span>";
+        } else {
+          for (; i < l; i++) {
+            html.push("<span>" + list[i] + "</span>");
+          }
+          oBox.innerHTML = html.join("");
+        }
+      }
+
+      function testFind() {
+        timer = new Date();
+        var list = trie.find("tom");
+        lapse = new Date() - timer;
+
+        tearDown();
+      }
+
+      function tearDown() {
+        delete trie;
+      }
+
+      function hideBox() {
+        if (!oBox) return;
+        oBox.style.display = 'none';
+      }
+
+      function logIt(msg) {
+        if (!log) {
+          log = document.getElementById('log');
+        }
+
+        log.appendChild(document.createTextNode(msg));
+        log.appendChild(document.createElement('br'));
+      }
+    </script>
+  </body>
+</html>
