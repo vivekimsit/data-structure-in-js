@@ -89,7 +89,8 @@ BinarySearchTree.prototype = {
         found = true;
       }
     }
-    while (found) {
+
+    if (found) {
       childCount = (current.left !== null ? 1 : 0) +
           (current.right !== null ? 1 : 0);
       if (current === this._root) {

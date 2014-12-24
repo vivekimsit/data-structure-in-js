@@ -40,7 +40,7 @@
          function testContains() {
            setUp();
 
-           console.log('In: ', arguments.callee.name);
+           console.log('\nIn: ', arguments.callee.name);
 
            bst.add();
            console.log('When tree empty: bst.contains(1)', bst.contains(1));
@@ -57,12 +57,31 @@
          }
 
 
+         function testDelete() {
+           setUp();
+
+           console.log('\nIn: ', arguments.callee.name);
+
+           bst.add(5);
+           bst.add(10);
+           bst.add(6);
+           console.log('bst.contains(5)', bst.contains(5));
+           bst.remove(5);
+           console.log('Size after first remove, 2: ', bst.size() === 2);
+           console.log('Root, 10: ', bst._root.value === 10);
+           console.log('bst.contains(5)', bst.contains(5));
+
+           tearDown();
+         }
+
+
          function tearDown() {
            delete bst;
          }
-         
+
          testAdd();
          testContains();
+         testDelete();
        }(window || {}));
     </script>
   </body>
