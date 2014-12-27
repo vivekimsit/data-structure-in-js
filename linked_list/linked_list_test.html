@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <title>Linked List Tests</title>
+    <script type="text/javascript" src="linked_list.js"></script>
+  </head>
+  <body>
+    <h1>Linked List Tests</h1>
+    <script type="text/javascript">
+      ;(function() {
+         var list;
+
+         function setUp() {
+           list = new LinkedList();
+           list.add('Foo');
+           list.add('Bar');
+         }
+
+         function testAdd() {
+           setUp();
+           console.log('In: ', arguments.callee.name);
+
+           list.add('FooBar');
+           console.log('Size: ', list.size() === 3);
+           tearDown();
+         }
+
+
+         function testFind() {
+           setUp();
+           console.log('\nIn: ', arguments.callee.name);
+
+           list.add('FooBar');
+           console.log('Find: ' , list.item(0) === 'Foo');
+           console.log('Find: ' , list.item(2) === 'FooBar');
+           tearDown();
+         }
+
+
+         function testRemove() {
+           setUp();
+           console.log('\nIn: ', arguments.callee.name);
+
+           console.log('Size: ', list.size() === 2);
+           var val = list.remove(0);
+           console.log('Size: ', list.size() === 1);
+           console.log('Item Foo: ', val === 'Foo');
+           tearDown();
+         }
+
+
+         function tearDown() {
+           delete list;
+         }
+
+         testAdd();
+         testFind();
+         testRemove();
+       }(window || {}));
+    </script>
+  </body>
+</html>
+
