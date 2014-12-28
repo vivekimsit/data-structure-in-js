@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>Doubly Linked List Tests</title>
+    <script type="text/javascript" src="doubly_linked_list.js"></script>
+  </head>
+  <body>
+    <h1>Doubly Linked List Tests</h1>
+    <script type="text/javascript">
+      ;(function() {
+         var list;
+
+         function setUp() {
+           list = new LinkedList();
+           list.add('Foo');
+           list.add('Bar');
+         }
+
+         function testAdd() {
+           setUp();
+           console.log('In: ', arguments.callee.name);
+
+           list.add('FooBar');
+           console.log(list.toString());
+           console.log('Size == 3 ', list.size() === 3);
+           tearDown();
+         }
+
+
+         function testFind() {
+           setUp();
+           console.log('\nIn: ', arguments.callee.name);
+
+           list.add('FooBar');
+           console.log('Foo present ' , list.item(0) === 'Foo');
+           console.log('FooBar present ' , list.item(2) === 'FooBar');
+           tearDown();
+         }
+
+
+         function testRemove() {
+           setUp();
+           console.log('\nIn: ', arguments.callee.name);
+
+           console.log('Size == 2 ', list.size() === 2);
+           var val = list.remove(0);
+           console.log('Size == 1 ', list.size() === 1);
+           tearDown();
+         }
+
+
+         function tearDown() {
+           delete list;
+         }
+
+         testAdd();
+         testFind();
+         testRemove();
+       }(window || {}));
+    </script>
+  </body>
+</html>
+
+
